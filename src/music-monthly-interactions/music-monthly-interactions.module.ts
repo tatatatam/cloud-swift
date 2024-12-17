@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MusicMonthlyInteractionSchema } from './music-monthly-interactions.scheme';
+import { MusicMonthlyInteractionSchema } from './scheme/music-monthly-interactions.scheme';
 
 @Module({
   imports: [
@@ -11,6 +11,5 @@ import { MusicMonthlyInteractionSchema } from './music-monthly-interactions.sche
       },
     ]),
   ],
-  exports: [MongooseModule],
 })
 export class MusicMonthlyInteractionsModule {}
