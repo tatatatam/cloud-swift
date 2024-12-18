@@ -37,3 +37,13 @@ export class MusicQueryDTO {
   @IsString()
   order: Order;
 }
+
+export class RankQueryDTO {
+  @ApiProperty({
+    description: 'Limit number',
+    example: 10,
+    required: false,
+  })
+  @IsNumber()
+  limit: number;
+}
