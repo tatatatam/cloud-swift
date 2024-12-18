@@ -35,26 +35,56 @@ export class MusicsService {
       {
         $lookup: {
           from: 'musics', // Join with Musics collection
-          localField: 'musicId',
-          foreignField: '_id',
-          as: 'musicDetails',
+          localField: 'musicId', // Link by musicId
+          foreignField: '_id', // Match with _id in Musics
+          as: 'musicDetails', // Output field for joined data
         },
       },
-      { $unwind: '$musicDetails' }, // Unwind the joined data
+      { $unwind: '$musicDetails' }, // Flatten the musicDetails array
       {
         $group: {
           _id: {
-            month: { $dateToString: { format: '%Y-%m-01', date: '$date' } },
-            // Group by the first day of each month
+            year: { $year: '$date' }, // Extract year from date
+            month: { $month: '$date' }, // Extract month from date
           },
-
-          maxPlays: { $max: '$playsCount' },
-          mostPlayedMusic: { $first: '$musicDetails' },
+          mostPlays: { $max: '$playsCount' }, // Find max plays per month
+          songs: {
+            $push: {
+              song: '$musicDetails.song',
+              artist: '$musicDetails.artist',
+              playsCount: '$playsCount',
+            },
+          },
         },
       },
       {
-        $sort: { '_id.year': 1, '_id.month': 1 }, // Sort by year and month
+        $project: {
+          _id: 1,
+          mostPlays: 1,
+          topSong: {
+            $arrayElemAt: [
+              {
+                $filter: {
+                  input: '$songs',
+                  as: 'song',
+                  cond: { $eq: ['$$song.playsCount', '$mostPlays'] },
+                },
+              },
+              0,
+            ],
+          },
+        },
       },
+      {
+        $project: {
+          year: '$_id.year',
+          month: '$_id.month',
+          song: '$topSong.song',
+          artist: '$topSong.artist',
+          playsCount: '$mostPlays',
+        },
+      },
+      { $sort: { year: 1, month: 1 } }, // Sort by year and month
     ]);
 
     return data;
@@ -74,6 +104,13 @@ export class MusicsService {
         $group: {
           _id: '$musicDetails.album',
           totalPlays: { $sum: '$playsCount' },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          album: '$_id',
+          totalPlays: 1,
         },
       },
       { $sort: { totalPlays: -1 } },

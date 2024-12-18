@@ -1,12 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, SchemaTypes } from 'mongoose';
+import { Music } from 'src/musics/scheme/musics.scheme';
 
 export type MusicMonthlyInteractionDocument =
   HydratedDocument<MusicMonthlyInteraction>;
 
 @Schema()
 export class MusicMonthlyInteraction {
-  @Prop()
+  @Prop({ type: SchemaTypes.ObjectId, ref: Music.name })
   musicId: string;
 
   @Prop()

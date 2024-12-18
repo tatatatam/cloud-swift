@@ -1,10 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsString } from 'class-validator';
 
-enum Order {
-  ASC = 'asc',
-  DESC = 'desc',
-}
 export class MusicQueryDTO {
   @ApiProperty({
     description: 'Page number',
@@ -28,14 +24,6 @@ export class MusicQueryDTO {
   })
   @IsString()
   search: string;
-
-  @ApiProperty({
-    description: 'Order',
-    enum: Order,
-    required: false,
-  })
-  @IsString()
-  order: Order;
 }
 
 export class RankQueryDTO {

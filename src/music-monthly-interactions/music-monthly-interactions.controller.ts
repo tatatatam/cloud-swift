@@ -1,5 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { MusicMonthlyInteractionService } from './music-monthly-interactions.services';
+import { ApiOperation } from '@nestjs/swagger';
+import { FindByIdDTO } from 'src/dto/query-music-monthly-interaction.dto';
 
 @Controller()
 export class MusicMonthlyInteractionsController {
@@ -7,8 +9,12 @@ export class MusicMonthlyInteractionsController {
     private readonly musicMonthlyInteractionService: MusicMonthlyInteractionService,
   ) {}
 
+  @ApiOperation({
+    summary: 'Get monthly interactions by music id',
+    description: 'Get monthly interactions by music id',
+  })
   @Get(':id')
-  findById(@Param() id) {
-    return this.musicMonthlyInteractionService.findByMusicId(id);
+  findById(@Param() query: FindByIdDTO) {
+    return this.musicMonthlyInteractionService.findByMusicId(query);
   }
 }

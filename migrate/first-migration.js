@@ -12,9 +12,14 @@ async function seedDatabase() {
   console.log('Seeding database...');
   // Connect to MongoDB
   const mongodbClient = await MongoClient.connect(mongoUri);
-  console.log(mongodbClient);
 
   const db = mongodbClient.db(dbName);
+  db.createIndex('musics', {
+    song: 'text',
+    artist: 'text',
+    year: 'text',
+    album: 'text',
+  });
   const dbMusicMonthly = db.collection('musicmonthlyinteractions');
   const collection = db.collection(collectionName);
   console.log(seedData);
