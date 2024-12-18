@@ -15,6 +15,7 @@ async function seedDatabase() {
   console.log(mongodbClient);
 
   const db = mongodbClient.db(dbName);
+  const dbMusicMonthly = db.collection('musicmonthlyinteractions');
   const collection = db.collection(collectionName);
   console.log(seedData);
   for (let i = 0; i < seedData.length; i++) {
@@ -25,9 +26,31 @@ async function seedDatabase() {
       year: seedData[i].Year,
       album: seedData[i].Album,
     };
-
+    const june = new Date('2024-06-01');
+    const july = new Date('2024-07-01');
+    const august = new Date('2024-08-01');
     // Insert the song data
-    await collection.insertOne(songData);
+    const musicData = await collection.insertOne(songData);
+    const musicId = musicData.insertedId;
+    await dbMusicMonthly.insertMany([
+      {
+        musicId,
+        date: june,
+        playsCount: seedData[i]['Plays - June'],
+      },
+
+      {
+        musicId,
+        date: july,
+        playsCount: seedData[i]['Plays - July'],
+      },
+
+      {
+        musicId,
+        date: august,
+        playsCount: seedData[i]['Plays - August'],
+      },
+    ]);
   }
   mongodbClient.close();
 }

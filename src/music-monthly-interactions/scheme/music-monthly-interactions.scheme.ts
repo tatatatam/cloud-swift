@@ -1,15 +1,21 @@
-import { Schema, Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 
-export interface MusicMonthlyInteraction extends Document {
-  id: string;
+export type MusicMonthlyInteractionDocument =
+  HydratedDocument<MusicMonthlyInteraction>;
+
+@Schema()
+export class MusicMonthlyInteraction {
+  @Prop()
   musicId: string;
-  playsCount: number;
-  month: Date;
+
+  @Prop()
+  playsCount: string;
+
+  @Prop()
+  date: Date;
 }
 
-export const MusicMonthlyInteractionSchema =
-  new Schema<MusicMonthlyInteraction>({
-    musicId: { type: String, required: true },
-    playsCount: { type: Number, required: true },
-    month: { type: Date, required: true },
-  });
+export const MusicMonthlyInteractionSchema = SchemaFactory.createForClass(
+  MusicMonthlyInteraction,
+);

@@ -10,4 +10,14 @@ export class MusicsController {
   findAll(@Query() query: MusicQueryDTO) {
     return this.musicsService.findAll(query);
   }
+
+  @Get('trending')
+  summarizeTrending() {
+    return this.musicsService.summarizeTrending();
+  }
+
+  @Get('monthly-trending')
+  summarizeMonthlyTrending() {
+    return this.musicsService.sumarizeMonthlyTrending();
+  }
 }
