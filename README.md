@@ -66,4 +66,7 @@ npm run start:dev
 
 ---
 
-Enjoy building with NestJS!
+### What you can checkout?
+
+- http://localhost:3000/api
+  
