@@ -68,5 +68,5 @@ npm run start:dev
 
 ### What you can checkout?
 
-- http://localhost:3000/api
+- Swagger API - http://localhost:3000/api
   
