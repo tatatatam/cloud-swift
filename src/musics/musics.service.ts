@@ -26,8 +26,16 @@ export class MusicsService {
       .find(filter)
       .skip((page - 1) * limit)
       .limit(limit);
+    const count = await this.musicModel.countDocuments();
 
-    return data;
+    return {
+      data,
+      pagination: {
+        page,
+        limit,
+        total: count,
+      },
+    };
   }
 
   async sumarizeMonthlyTrending() {

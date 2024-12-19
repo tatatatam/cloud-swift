@@ -1,8 +1,8 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { MusicsService } from './musics.service';
 import { MusicQueryDTO, RankQueryDTO } from 'src/dto/query-music.dto';
-import { ApiOperation } from '@nestjs/swagger';
-
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Music } from '../entities/music.entity';
 @Controller('musics')
 export class MusicsController {
   constructor(private readonly musicsService: MusicsService) {}
@@ -12,6 +12,11 @@ export class MusicsController {
     description: 'Get all music with optional search and pagination',
   })
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: 'The found record',
+    type: Music,
+  })
   findAll(@Query() query: MusicQueryDTO) {
     return this.musicsService.findAll(query);
   }
