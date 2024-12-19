@@ -3,7 +3,7 @@ import { MusicMonthlyInteractionService } from './music-monthly-interactions.ser
 import { ApiOperation } from '@nestjs/swagger';
 import { FindByIdDTO } from 'src/dto/query-music-monthly-interaction.dto';
 
-@Controller()
+@Controller('musics-interactions')
 export class MusicMonthlyInteractionsController {
   constructor(
     private readonly musicMonthlyInteractionService: MusicMonthlyInteractionService,
@@ -13,7 +13,7 @@ export class MusicMonthlyInteractionsController {
     summary: 'Get monthly interactions by music id',
     description: 'Get monthly interactions by music id',
   })
-  @Get(':id')
+  @Get('/monthly/:id')
   findById(@Param() query: FindByIdDTO) {
     return this.musicMonthlyInteractionService.findByMusicId(query);
   }

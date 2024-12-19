@@ -7,7 +7,9 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Cloud swift API')
-    .setDescription('Public API to get data from cloud swift')
+    .setDescription(
+      'Public API to get data from cloud swift database. This API is used for sharing music data of cloud swift',
+    )
     .setVersion('1.0')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);

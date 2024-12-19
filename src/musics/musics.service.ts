@@ -97,7 +97,7 @@ export class MusicsService {
 
     return data;
   }
-  async summarizeTrending() {
+  async summarizeAlbumTrending() {
     const data = await this.musicMonthlyInteractionModel.aggregate([
       {
         $lookup: {

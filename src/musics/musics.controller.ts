@@ -22,12 +22,12 @@ export class MusicsController {
   }
 
   @ApiOperation({
-    summary: 'Get the trending music',
+    summary: 'Get the trending music of album',
     description: 'Get the trending music based on the number of interactions',
   })
-  @Get('trending')
+  @Get('trending/album')
   summarizeTrending() {
-    return this.musicsService.summarizeTrending();
+    return this.musicsService.summarizeAlbumTrending();
   }
 
   @ApiOperation({
@@ -35,7 +35,7 @@ export class MusicsController {
     description:
       'Get the monthly trending music based on the number of interactions',
   })
-  @Get('monthly-trending')
+  @Get('trending/monthly')
   summarizeMonthlyTrending() {
     return this.musicsService.sumarizeMonthlyTrending();
   }
