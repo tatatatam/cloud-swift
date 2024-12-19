@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsNumber,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+  MinLength,
+} from 'class-validator';
 
 export class MusicQueryDTO {
   @ApiProperty({
@@ -7,7 +15,10 @@ export class MusicQueryDTO {
     example: 1,
     required: false,
   })
+  @Type(() => Number)
   @IsNumber()
+  @Min(1)
+  @IsOptional()
   page: number;
 
   @ApiProperty({
@@ -15,14 +26,21 @@ export class MusicQueryDTO {
     example: 10,
     required: false,
   })
+  @Type(() => Number)
   @IsNumber()
+  @Min(1)
+  @Max(100)
+  @IsOptional()
   limit: number;
 
   @ApiProperty({
     description: 'Search query',
+    example: 'taylor',
     required: false,
   })
+  @IsOptional()
   @IsString()
+  @MinLength(3)
   search: string;
 }
 
@@ -32,6 +50,10 @@ export class RankQueryDTO {
     example: 10,
     required: false,
   })
+  @Type(() => Number)
   @IsNumber()
+  @IsOptional()
+  @Min(1)
+  @Max(100)
   limit: number;
 }
